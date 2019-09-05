@@ -1,8 +1,8 @@
-package com.zkj.demo.provider;
+package com.xuewen.community.provider;
 
 import com.alibaba.fastjson.JSON;
-import com.zkj.demo.dto.AccessTokenDTO;
-import com.zkj.demo.dto.GithubUser;
+import com.xuewen.community.dto.AccessTokenDTO;
+import com.xuewen.community.dto.GithubUser;
 import okhttp3.*;
 import org.springframework.stereotype.Component;
 

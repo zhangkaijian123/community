@@ -1,10 +1,8 @@
-package com.zkj.demo;
+package com.xuewen.community;
 
 import java.util.HashSet;
 import java.util.Set;
 import java.util.TreeSet;
-
-import static org.junit.Assert.*;
 
 public class DemoApplicationTest {
     public static void main(String[] args) {

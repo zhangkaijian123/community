@@ -1,0 +1,19 @@
+server.port: 8887
+
+spring:
+  datasource:
+    druid:
+      url:  jdbc:mysql://182.92.166.2:3306/community?useUnicode=true&characterEncoding=UTF-8&serverTimezone=UTC&allowPublicKeyRetrieval=true&verifyServerCertificate=false&useSSL=false
+      driver-class-name:  com.mysql.cj.jdbc.Driver
+      username:  root
+      password:  tyqq
+
+github.client.id: df5aed19fe7df659c65d
+github.client.secret: 3a5997253f36a0b524c429fe7520b501e2179d50
+github.redirect.uri: http://localhost:8887/callback
+
+mybatis-plus:
+  mapperLocations: classpath:/mybatis-mapper/*
+  typeAliasesPackage: com.xuewen.community.model
+  Configuration:
+    map-underscore-to-camel-case: true

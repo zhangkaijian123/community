@@ -1,4 +1,4 @@
-package com.zkj.demo.dto;
+package com.xuewen.community.dto;
 
 import lombok.Getter;
 import lombok.Setter;

@@ -1,21 +1,17 @@
-package com.zkj.demo.dto;
+package com.xuewen.community.dto;
 
-import lombok.Getter;
-import lombok.Setter;
+import lombok.Data;
 
 /**
  * @author 张铠建
  * @description
  * @createdate 2019-05-27 13:44
  **/
+@Data
 public class GithubUser {
-    @Getter
-    @Setter
+
     private String name;
-    @Getter
-    @Setter
     private Long id;
-    @Getter
-    @Setter
     private String bio;
+    private String avatar_url;
 }
