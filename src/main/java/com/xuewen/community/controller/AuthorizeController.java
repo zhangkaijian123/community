@@ -51,7 +51,7 @@ public class AuthorizeController {
         accessTokenDTO.setState(state);
         String accessToken = githubProvider.getAccessToken(accessTokenDTO);
         GithubUser githubUser = githubProvider.getUser(accessToken);
-        if (githubUser !=null){
+        if (githubUser !=null && githubUser.getId() != null){
             String token = UUID.randomUUID().toString();
             QueryWrapper<User> queryWrapper = new QueryWrapper<>();
             queryWrapper.eq("account_id",githubUser.getId());
@@ -70,6 +70,7 @@ public class AuthorizeController {
                 user.setToken(token);
                 user.setGmtCreate(System.currentTimeMillis());
                 user.setGmtModified(user.getGmtCreate());
+                user.setAvatarUrl(githubUser.getAvatarUrl());
                 userMapper.insert(user);
                 request.getSession().setAttribute("user",user);
             }
