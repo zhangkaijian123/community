@@ -1,6 +1,9 @@
 package com.xuewen.community.service;
 
 import com.baomidou.mybatisplus.core.conditions.query.QueryWrapper;
+import com.baomidou.mybatisplus.core.metadata.IPage;
+import com.baomidou.mybatisplus.extension.plugins.pagination.Page;
+import com.xuewen.community.dto.PaginationDTO;
 import com.xuewen.community.dto.QuestionDTO;
 import com.xuewen.community.mapper.QuestionMapper;
 import com.xuewen.community.mapper.UserMapper;
@@ -27,10 +30,12 @@ public class QuestionService {
     @Autowired
     private QuestionMapper questionMapper;
 
-    public List<QuestionDTO> list() {
+    public PaginationDTO list(Page<Question> ipage) {
         QueryWrapper<Question> queryWrapper = new QueryWrapper<>();
-        List<Question> questions = questionMapper.selectList(queryWrapper);
+        IPage<Question> iPage = questionMapper.selectPage(ipage,queryWrapper);
+        List<Question> questions = iPage.getRecords();
         List<QuestionDTO> questionDTOList = new ArrayList<>();
+        PaginationDTO paginationDTO = new PaginationDTO();
         for (Question question:questions) {
             User user = userMapper.selectById(question.getCreator());
             QuestionDTO questionDTO = new QuestionDTO();
@@ -38,6 +43,8 @@ public class QuestionService {
             questionDTO.setUser(user);
             questionDTOList.add(questionDTO);
         }
-        return questionDTOList;
+        paginationDTO.setQuestions(questionDTOList);
+        paginationDTO.setPagination((int)iPage.getTotal(),(int)iPage.getCurrent(),(int)iPage.getSize());
+        return paginationDTO;
     }
 }

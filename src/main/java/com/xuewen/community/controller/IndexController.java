@@ -1,6 +1,8 @@
 package com.xuewen.community.controller;
 
 import com.baomidou.mybatisplus.core.conditions.query.QueryWrapper;
+import com.baomidou.mybatisplus.extension.plugins.pagination.Page;
+import com.xuewen.community.dto.PaginationDTO;
 import com.xuewen.community.dto.QuestionDTO;
 import com.xuewen.community.mapper.QuestionMapper;
 import com.xuewen.community.mapper.UserMapper;
@@ -34,8 +36,11 @@ public class IndexController {
     @Autowired
     private QuestionService questionService;
 
+    private static final Integer size = 2;
+
     @GetMapping(path = "/")
-    public String welcomePage(HttpServletRequest request, Model model){
+    public String welcomePage(HttpServletRequest request, Model model,
+                                  @RequestParam(value = "page",defaultValue = "1") Integer page){
         //持久化登陆，拿到token
         Cookie[] cookies = request.getCookies();
         if (cookies!=null) {
@@ -52,9 +57,9 @@ public class IndexController {
                 }
             }
         }
-
-        List<QuestionDTO> questionList = questionService.list();
-        model.addAttribute("questions",questionList);
+        Page<Question> ipage = new Page<>(page, size);
+        PaginationDTO pagination = questionService.list(ipage);
+        model.addAttribute("pagination",pagination);
         return "index";
     }
 }
