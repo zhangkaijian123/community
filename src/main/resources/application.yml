@@ -11,6 +11,7 @@ spring:
 github.client.id: df5aed19fe7df659c65d
 github.client.secret: 3a5997253f36a0b524c429fe7520b501e2179d50
 github.redirect.uri: http://localhost:8887/callback
+pageSize: 5
 
 mybatis-plus:
   mapperLocations: classpath:/mybatis-mapper/*

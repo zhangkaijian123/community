@@ -32,6 +32,20 @@ public class QuestionService {
 
     public PaginationDTO list(Page<Question> ipage) {
         QueryWrapper<Question> queryWrapper = new QueryWrapper<>();
+        Integer page = (int)ipage.getCurrent();
+
+        Integer totalCount = questionMapper.selectCount(queryWrapper);
+        Integer totalPage = 0;
+        Integer size = (int)ipage.getSize();
+        if (totalCount % size ==0){
+            totalPage = totalCount / size;
+        }else {
+            totalPage = totalCount / size + 1;
+        }
+
+        if (page > totalPage){
+            ipage.setCurrent(totalPage);
+        }
         IPage<Question> iPage = questionMapper.selectPage(ipage,queryWrapper);
         List<Question> questions = iPage.getRecords();
         List<QuestionDTO> questionDTOList = new ArrayList<>();
