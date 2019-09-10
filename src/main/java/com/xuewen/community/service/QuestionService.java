@@ -99,4 +99,27 @@ public class QuestionService {
         paginationDTO.setPagination((int)iPage.getTotal(),(int)iPage.getCurrent(),(int)iPage.getSize());
         return paginationDTO;
     }
+
+    public QuestionDTO getById(Integer id) {
+        Question question = questionMapper.selectById(id);
+        User user = userMapper.selectById(question.getCreator());
+        QuestionDTO questionDTO = new QuestionDTO();
+        BeanUtils.copyProperties(question,questionDTO);
+        questionDTO.calculationTime(question.getGmtCreate());
+        questionDTO.setUser(user);
+        return questionDTO;
+    }
+
+    public void creatOrUpdate(Question question) {
+        if (question.getId() == null){
+            //创建
+            question.setGmtCreate(System.currentTimeMillis());
+            question.setGmtModified(question.getGmtCreate());
+            questionMapper.insert(question);
+        }else {
+            //更新
+            question.setGmtModified(question.getGmtCreate());
+            questionMapper.updateById(question);
+        }
+    }
 }
