@@ -5,6 +5,8 @@ import com.baomidou.mybatisplus.core.metadata.IPage;
 import com.baomidou.mybatisplus.extension.plugins.pagination.Page;
 import com.xuewen.community.dto.PaginationDTO;
 import com.xuewen.community.dto.QuestionDTO;
+import com.xuewen.community.exception.CustomizeErrorCode;
+import com.xuewen.community.exception.CustomizeException;
 import com.xuewen.community.mapper.QuestionMapper;
 import com.xuewen.community.mapper.UserMapper;
 import com.xuewen.community.model.Question;
@@ -102,6 +104,9 @@ public class QuestionService {
 
     public QuestionDTO getById(Integer id) {
         Question question = questionMapper.selectById(id);
+        if (question == null){
+            throw new CustomizeException(CustomizeErrorCode.QUESTION_NOT_FOUND);
+        }
         User user = userMapper.selectById(question.getCreator());
         QuestionDTO questionDTO = new QuestionDTO();
         BeanUtils.copyProperties(question,questionDTO);
@@ -119,7 +124,14 @@ public class QuestionService {
         }else {
             //更新
             question.setGmtModified(question.getGmtCreate());
-            questionMapper.updateById(question);
+            int updated = questionMapper.updateById(question);
+            if (updated != 1){
+                throw new CustomizeException(CustomizeErrorCode.QUESTION_NOT_FOUND);
+            }
         }
+    }
+
+    public void incView(Integer id) {
+        questionMapper.incView(id);
     }
 }
