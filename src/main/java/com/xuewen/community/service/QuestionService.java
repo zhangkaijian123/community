@@ -13,7 +13,10 @@ import org.springframework.beans.BeanUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
+import java.text.SimpleDateFormat;
+import java.time.LocalDate;
 import java.util.ArrayList;
+import java.util.Date;
 import java.util.List;
 
 /**
@@ -55,6 +58,41 @@ public class QuestionService {
             QuestionDTO questionDTO = new QuestionDTO();
             BeanUtils.copyProperties(question,questionDTO);
             questionDTO.setUser(user);
+            questionDTO.calculationTime(question.getGmtCreate());
+            questionDTOList.add(questionDTO);
+        }
+        paginationDTO.setQuestions(questionDTOList);
+        paginationDTO.setPagination((int)iPage.getTotal(),(int)iPage.getCurrent(),(int)iPage.getSize());
+        return paginationDTO;
+    }
+
+    public PaginationDTO list(Page<Question> ipage, Integer id) {
+        QueryWrapper<Question> queryWrapper = new QueryWrapper<>();
+        queryWrapper.eq("creator",id);
+        Integer page = (int)ipage.getCurrent();
+
+        Integer totalCount = questionMapper.selectCount(queryWrapper);
+        Integer totalPage = 0;
+        Integer size = (int)ipage.getSize();
+        if (totalCount % size ==0){
+            totalPage = totalCount / size;
+        }else {
+            totalPage = totalCount / size + 1;
+        }
+
+        if (page > totalPage){
+            ipage.setCurrent(totalPage);
+        }
+        IPage<Question> iPage = questionMapper.selectPage(ipage,queryWrapper);
+        List<Question> questions = iPage.getRecords();
+        List<QuestionDTO> questionDTOList = new ArrayList<>();
+        PaginationDTO paginationDTO = new PaginationDTO();
+        for (Question question:questions) {
+            User user = userMapper.selectById(question.getCreator());
+            QuestionDTO questionDTO = new QuestionDTO();
+            BeanUtils.copyProperties(question,questionDTO);
+            questionDTO.setUser(user);
+            questionDTO.calculationTime(question.getGmtCreate());
             questionDTOList.add(questionDTO);
         }
         paginationDTO.setQuestions(questionDTOList);

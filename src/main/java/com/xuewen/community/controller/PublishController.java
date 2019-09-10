@@ -1,8 +1,6 @@
 package com.xuewen.community.controller;
 
-import com.baomidou.mybatisplus.core.conditions.query.QueryWrapper;
 import com.xuewen.community.mapper.QuestionMapper;
-import com.xuewen.community.mapper.UserMapper;
 import com.xuewen.community.model.Question;
 import com.xuewen.community.model.User;
 import org.apache.commons.lang3.StringUtils;
@@ -13,7 +11,6 @@ import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 
-import javax.servlet.http.Cookie;
 import javax.servlet.http.HttpServletRequest;
 
 /**
@@ -26,9 +23,6 @@ public class PublishController {
 
     @Autowired
     private QuestionMapper questionMapper;
-
-    @Autowired
-    private UserMapper userMapper;
 
     @GetMapping("/publish")
     public String publish(){
@@ -63,23 +57,7 @@ public class PublishController {
             return "publish";
         }
 
-
-        User user = null;
-        Cookie[] cookies = request.getCookies();
-        if (cookies!=null) {
-            for (Cookie cookie:cookies) {
-                if (cookie.getName().equals("token")){
-                    String token = cookie.getValue();
-                    QueryWrapper<User> queryWrapper = new QueryWrapper<>();
-                    queryWrapper.eq("token",token);
-                    user = userMapper.selectOne(queryWrapper);
-                    if (user!=null){
-                        request.getSession().setAttribute("user",user);
-                    }
-                    break;
-                }
-            }
-        }
+        User user = (User) request.getSession().getAttribute("user");
 
         if (user==null){
             model.addAttribute("error", "用户未登录");
