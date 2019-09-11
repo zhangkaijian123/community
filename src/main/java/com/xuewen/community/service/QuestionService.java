@@ -37,6 +37,7 @@ public class QuestionService {
 
     public PaginationDTO list(Page<Question> ipage) {
         QueryWrapper<Question> queryWrapper = new QueryWrapper<>();
+        queryWrapper.orderByDesc("gmt_create");
         Integer page = (int)ipage.getCurrent();
 
         Integer totalCount = questionMapper.selectCount(queryWrapper);
