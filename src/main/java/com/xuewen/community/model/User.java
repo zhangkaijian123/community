@@ -15,11 +15,11 @@ import lombok.Data;
 public class User {
 
     @TableId(value = "id",type = IdType.INPUT)
-    private Integer id;
+    private Long id;
     private String accountId;
     private String name;
     private String token;
     private String avatarUrl;
-    private long gmtCreate;
-    private long gmtModified;
+    private Long gmtCreate;
+    private Long gmtModified;
 }

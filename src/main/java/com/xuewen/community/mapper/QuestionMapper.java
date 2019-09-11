@@ -11,5 +11,11 @@ import org.apache.ibatis.annotations.Update;
  **/
 public interface QuestionMapper extends BaseMapper<Question> {
     @Update("update question set view_count = view_count + 1 where id = #{id}")
-    void incView(Integer id);
+    int incView(Long id);
+
+    @Update("update question set comment_count = comment_count + 1 where id = #{id}")
+    int incCommentCount(Long id);
+
+    @Update("update comment set comment_count = comment_count + 1 where id = #{id}")
+    int incComCommentCount(Long id);
 }

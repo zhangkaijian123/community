@@ -68,7 +68,7 @@ public class QuestionService {
         return paginationDTO;
     }
 
-    public PaginationDTO list(Page<Question> ipage, Integer id) {
+    public PaginationDTO list(Page<Question> ipage, long id) {
         QueryWrapper<Question> queryWrapper = new QueryWrapper<>();
         queryWrapper.eq("creator",id);
         Integer page = (int)ipage.getCurrent();
@@ -102,7 +102,7 @@ public class QuestionService {
         return paginationDTO;
     }
 
-    public QuestionDTO getById(Integer id) {
+    public QuestionDTO getById(Long id) {
         Question question = questionMapper.selectById(id);
         if (question == null){
             throw new CustomizeException(CustomizeErrorCode.QUESTION_NOT_FOUND);
@@ -131,7 +131,7 @@ public class QuestionService {
         }
     }
 
-    public void incView(Integer id) {
+    public void incView(Long id) {
         questionMapper.incView(id);
     }
 }
