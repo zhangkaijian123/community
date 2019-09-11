@@ -7,6 +7,7 @@
     <link rel="stylesheet" href="/css/bootstrap-theme.min.css" type="text/css"/>
     <link rel="stylesheet" href="/css/community.css"/>
     <script src="/js/bootstrap.min.js" type="application/javascript"></script>
+    <script src="/js/community.js" type="application/javascript"></script>
 
 </head>
 <body>
@@ -20,7 +21,7 @@
                 <input type="hidden" name="id" th:value="${id}">
                 <div class="form-group">
                     <label for="title">问题标题（简单扼要）：</label>
-                    <input type="text" class="form-control" id="title" name="title" placeholder="问题标题..." th:value="${title}">
+                    <input type="text" class="form-control" id="title" name="title" autocomplete="off" placeholder="问题标题..." th:value="${title}">
                 </div>
                 <div class="form-group">
                     <label for="title">问题补充（必填，请参照右侧提示）：</label>
@@ -28,7 +29,30 @@
                 </div>
                 <div class="form-group">
                     <label for="title">添加标签：</label>
-                    <input type="text" class="form-control"  id="tag" name="tag" placeholder="输入标签，以，号分隔" th:value="${tag}">
+                    <input type="text" class="form-control"  id="tag" name="tag" onclick="showSelectTag()"  autocomplete="off" placeholder="输入标签，以，号分隔" th:value="${tag}">
+                    <div id="select-tag" class="question-tag-tab">
+                        <ul class="nav nav-tabs" role="tablist">
+                            <li role="presentation" class="active"><a href="#technology" aria-controls="technology" role="tab" data-toggle="tab">技术</a></li>
+                            <li role="presentation"><a href="#complaints" aria-controls="complaints" role="tab" data-toggle="tab">吐槽</a></li>
+                            <li role="presentation"><a href="#campus" aria-controls="campus" role="tab" data-toggle="tab">校园</a></li>
+                            <li role="presentation"><a href="#game" aria-controls="game" role="tab" data-toggle="tab">游戏</a></li>
+                        </ul>
+                        <div class="tab-content">
+                            <div role="tabpanel" class="tab-pane active" id="technology">
+                                <span class="label label-info"><span class="glyphicon glyphicon-tags" onclick="selectTag('Java')">Java</span></span>
+                                <span class="label label-info"><span class="glyphicon glyphicon-tags" onclick="selectTag('Spring')">Spring</span></span>
+                                <span class="label label-info"><span class="glyphicon glyphicon-tags" onclick="selectTag('Spring Boot')">Spring Boot</span></span>
+                                <span class="label label-info"><span class="glyphicon glyphicon-tags" onclick="selectTag('Mysql')">Mysql</span></span>
+                                <span class="label label-info"><span class="glyphicon glyphicon-tags" onclick="selectTag('redis')">redis</span></span>
+                                <span class="label label-info"><span class="glyphicon glyphicon-tags" onclick="selectTag('Spring Cloud')">Spring Cloud</span></span>
+                            </div>
+                            <div role="tabpanel" class="tab-pane" id="complaints">
+                                <span class="lable label-info"><span class="glyphicon glyphicon-tags" onclick="selectTag('Spring Cloud')">素质</span></span>
+                            </div>
+                            <div role="tabpanel" class="tab-pane" id="Campus">...</div>
+                            <div role="tabpanel" class="tab-pane" id="game">...</div>
+                        </div>
+                    </div>
                 </div>
 
                 <div class="container-fluid main">

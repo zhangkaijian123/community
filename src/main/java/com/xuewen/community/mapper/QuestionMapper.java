@@ -2,7 +2,10 @@ package com.xuewen.community.mapper;
 
 import com.baomidou.mybatisplus.core.mapper.BaseMapper;
 import com.xuewen.community.model.Question;
+import org.apache.ibatis.annotations.Select;
 import org.apache.ibatis.annotations.Update;
+
+import java.util.List;
 
 /**
  * @Description TODO
@@ -18,4 +21,7 @@ public interface QuestionMapper extends BaseMapper<Question> {
 
     @Update("update comment set comment_count = comment_count + 1 where id = #{id}")
     int incComCommentCount(Long id);
+
+    @Select("select * from question where id != #{id} and tag regexp #{tag}")
+    List<Question> selectRelated(Long id, String tag);
 }
