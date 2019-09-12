@@ -29,9 +29,21 @@ public class UCloudProvider {
 
     @Value("${ucloud.ufile.public-key}")
     private String publicKey;
+
     @Value("${ucloud.ufile.private-key}")
     private String privateKey;
-    private String xuewen = "xuewen";
+
+    @Value("${ucloud.ufile.bucket-name}")
+    private String bucketName;
+
+    @Value("${ucloud.ufile.region}")
+    private String region;
+
+    @Value("${ucloud.ufile.suffix}")
+    private String suffix;
+
+    @Value("${ucloud.ufile.expires}")
+    private Integer expires;
 
 
     public String upload(InputStream fileStream, String mimeType, String fileName){
@@ -40,22 +52,21 @@ public class UCloudProvider {
                 publicKey, privateKey);
 
         // 对象操作需要ObjectConfig来配置您的地区和域名后缀
-        ObjectConfig config = new ObjectConfig("cn-bj", "ufileos.com");
-        File file = new File("your file path");
+        ObjectConfig config = new ObjectConfig(region, suffix);
 
         String generateFileName = "";
         String[] filePaths = fileName.split("\\.");
         if (filePaths.length > 1){
             generateFileName = UUID.randomUUID().toString() + "." + filePaths[filePaths.length - 1];
         }else {
-            return null;
+            throw new CustomizeException(CustomizeErrorCode.FILE_UPLOAD_ERROR);
         }
         try {
 
             PutObjectResultBean response = UfileClient.object(OBJECT_AUTHORIZER, config)
                     .putObject(fileStream, mimeType)
                     .nameAs(generateFileName)
-                    .toBucket(xuewen)
+                    .toBucket(bucketName)
                     .setOnProgressListener((bytesWritten, contentLength) -> {
 
                     })
@@ -63,7 +74,7 @@ public class UCloudProvider {
 
                     if (response != null && response.getRetCode() == 0){
                         String url = UfileClient.object(OBJECT_AUTHORIZER,config)
-                                    .getDownloadUrlFromPrivateBucket(generateFileName,xuewen,24*60*60)
+                                    .getDownloadUrlFromPrivateBucket(generateFileName,bucketName,expires)
                                     .createUrl();
                         return url;
                     }else {

@@ -40,12 +40,19 @@ public class QuestionService {
     @Autowired
     private QuestionMapper questionMapper;
 
-    public PaginationDTO list(Page<Question> ipage) {
+    public PaginationDTO list(String search, Page<Question> ipage) {
+
+        if (StringUtils.isNotBlank(search)){
+            String[] searchs = StringUtils.split(search, " ");
+            search = Arrays.stream(searchs).collect(Collectors.joining("|"));
+        }
+
+
         QueryWrapper<Question> queryWrapper = new QueryWrapper<>();
         queryWrapper.orderByDesc("gmt_create");
         Integer page = (int)ipage.getCurrent();
 
-        Integer totalCount = questionMapper.selectCount(queryWrapper);
+        Integer totalCount = questionMapper.countBySearch(search);
         Integer totalPage = 0;
         Integer size = (int)ipage.getSize();
         if (totalCount % size ==0){
@@ -57,8 +64,7 @@ public class QuestionService {
         if (page > totalPage){
             ipage.setCurrent(totalPage);
         }
-        IPage<Question> iPage = questionMapper.selectPage(ipage,queryWrapper);
-        List<Question> questions = iPage.getRecords();
+        List<Question> questions = questionMapper.selectBySearch(ipage.getPages(),size,search);
         List<QuestionDTO> questionDTOList = new ArrayList<>();
         PaginationDTO<QuestionDTO> paginationDTO = new PaginationDTO<>();
         for (Question question:questions) {
@@ -70,7 +76,7 @@ public class QuestionService {
             questionDTOList.add(questionDTO);
         }
         paginationDTO.setData(questionDTOList);
-        paginationDTO.setPagination((int)iPage.getTotal(),(int)iPage.getCurrent(),(int)iPage.getSize());
+        paginationDTO.setPagination(totalCount,(int)ipage.getCurrent(),size);
         return paginationDTO;
     }
 

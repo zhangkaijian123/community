@@ -135,3 +135,8 @@ body {
 .num {
     font-size: 1px;
 }
+
+.footer {
+    padding: 10px 25%;
+    color: #666;
+}

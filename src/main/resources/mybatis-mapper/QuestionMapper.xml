@@ -1,0 +1,23 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+        "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.xuewen.community.mapper.QuestionMapper">
+    <select id="countBySearch" resultType="Integer">
+      select count(*) from question
+      <where>
+          <if test="search != null">
+              and title regexp #{search}
+          </if>
+      </where>
+    </select>
+
+    <select id="selectBySearch" resultType="Question">
+        select * from question
+        <where>
+            <if test="search != null">
+                and title regexp #{search}
+            </if>
+        </where>
+        order by gmt_create desc limit #{page},#{size};
+    </select>
+</mapper>

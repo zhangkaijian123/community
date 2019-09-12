@@ -24,4 +24,8 @@ public interface QuestionMapper extends BaseMapper<Question> {
 
     @Select("select * from question where id != #{id} and tag regexp #{tag}")
     List<Question> selectRelated(Long id, String tag);
+
+    Integer countBySearch(String search);
+
+    List<Question> selectBySearch(long page, Integer size, String search);
 }

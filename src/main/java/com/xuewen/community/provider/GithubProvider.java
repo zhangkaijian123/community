@@ -3,6 +3,7 @@ package com.xuewen.community.provider;
 import com.alibaba.fastjson.JSON;
 import com.xuewen.community.dto.AccessTokenDTO;
 import com.xuewen.community.dto.GithubUser;
+import lombok.extern.slf4j.Slf4j;
 import okhttp3.*;
 import org.springframework.stereotype.Component;
 

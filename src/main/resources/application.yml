@@ -13,6 +13,10 @@ github.client.secret: 3a5997253f36a0b524c429fe7520b501e2179d50
 github.redirect.uri: http://localhost:8887/callback
 ucloud.ufile.public-key: TOKEN_1b10237f-28e2-49a9-8372-925fb844da39
 ucloud.ufile.private-key: 21298e37-34c7-4689-a68b-ae1e12199ca3
+ucloud.ufile.bucket-name: xuewen
+ucloud.ufile.region: cn-bj
+ucloud.ufile.suffix: ufileos.com
+ucloud.ufile.expires: 315360000
 pageSize: 5
 
 mybatis-plus:
@@ -21,3 +25,8 @@ mybatis-plus:
   Configuration:
     map-underscore-to-camel-case: true
     log-impl: org.apache.ibatis.logging.stdout.StdOutImpl
+
+logging:
+  file: /logs/community.log
+  level:
+    root: info

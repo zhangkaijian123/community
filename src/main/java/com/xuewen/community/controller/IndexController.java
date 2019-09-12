@@ -31,10 +31,12 @@ public class IndexController {
 
     @GetMapping(path = "/")
     public String welcomePage(Model model,
-                                  @RequestParam(value = "page",defaultValue = "1") Integer page){
+                                  @RequestParam(value = "page",defaultValue = "1") Integer page,
+                                    @RequestParam(value = "search",required = false) String search){
         Page<Question> ipage = new Page<>(page, size);
-        PaginationDTO pagination = questionService.list(ipage);
+        PaginationDTO pagination = questionService.list(search,ipage);
         model.addAttribute("pagination",pagination);
+        model.addAttribute("search",search);
         return "index";
     }
 }

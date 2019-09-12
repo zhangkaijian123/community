@@ -20,7 +20,7 @@ public class TagCache {
         List<TagDTO> tagDTOS = new ArrayList<>();
         TagDTO technology = new TagDTO();
         technology.setCategoryName("技术");
-        technology.setTags(Arrays.asList("java","javascript","php","css","html5","node.js","python","golang"));
+        technology.setTags(Arrays.asList("java","spring","spring boot","spring cloud","redis","mysql","javascript","php","css","html5","node.js","python","golang"));
         tagDTOS.add(technology);
 
         TagDTO complaints = new TagDTO();
