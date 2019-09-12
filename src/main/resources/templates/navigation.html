@@ -25,6 +25,7 @@
                     <li th:if="${session.user != null}">
                         <a href="/publish">提问</a>
                     </li>
+                    <li><a href="/profile/replies">通知 <span class="badge" th:text="${session.unreadCount}"></span></a></li>
                     <li th:if="${session.user == null}">
                         <a href="https://github.com/login/oauth/authorize?client_id=df5aed19fe7df659c65d&redirect_uri=http://localhost:8887/callback&scope=user&state=1">登录</a>
                     </li>
@@ -35,7 +36,6 @@
                         </a>
                         <ul class="dropdown-menu">
                             <li><a href="/profile/questions">我的问题</a></li>
-                            <li><a href="#">个人资料</a></li>
                             <li role="separator" class="divider"></li>
                             <li><a href="#">退出登录</a></li>
                         </ul>

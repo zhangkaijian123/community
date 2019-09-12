@@ -2,8 +2,10 @@ package com.xuewen.community.controller;
 
 import com.baomidou.mybatisplus.extension.plugins.pagination.Page;
 import com.xuewen.community.dto.PaginationDTO;
+import com.xuewen.community.model.Notification;
 import com.xuewen.community.model.Question;
 import com.xuewen.community.model.User;
+import com.xuewen.community.service.NotificationService;
 import com.xuewen.community.service.QuestionService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Value;
@@ -26,6 +28,9 @@ public class ProfileController {
     @Autowired
     private QuestionService questionService;
 
+    @Autowired
+    private NotificationService notificationService;
+
     @Value("${pageSize}")
     private Integer size;
 
@@ -37,20 +42,23 @@ public class ProfileController {
         if (user == null){
             return "redirect:/";
         }
+
         if ("questions".equals(action)){
+            Page<Question> ipage = new Page<>(page, size);
             model.addAttribute("section","questions");
             model.addAttribute("sectionName","我的提问");
-
+            PaginationDTO pagination = questionService.list(ipage,user.getId());
+            model.addAttribute("pagination",pagination);
         }
         if ("replies".equals(action)){
+            Page<Notification> ipage = new Page<>(page, size);
+            PaginationDTO pagination = notificationService.list(ipage,user.getId());
             model.addAttribute("section","replies");
             model.addAttribute("sectionName","最新回复");
-
+            model.addAttribute("pagination",pagination);
         }
 
-        Page<Question> ipage = new Page<>(page, size);
-        PaginationDTO pagination = questionService.list(ipage,user.getId());
-        model.addAttribute("pagination",pagination);
+
         return "profile";
     }
 }

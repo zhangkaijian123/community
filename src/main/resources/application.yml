@@ -11,6 +11,8 @@ spring:
 github.client.id: df5aed19fe7df659c65d
 github.client.secret: 3a5997253f36a0b524c429fe7520b501e2179d50
 github.redirect.uri: http://localhost:8887/callback
+ucloud.ufile.public-key: TOKEN_1b10237f-28e2-49a9-8372-925fb844da39
+ucloud.ufile.private-key: 21298e37-34c7-4689-a68b-ae1e12199ca3
 pageSize: 5
 
 mybatis-plus:

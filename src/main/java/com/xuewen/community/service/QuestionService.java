@@ -24,6 +24,8 @@ import java.util.Date;
 import java.util.List;
 import java.util.stream.Collectors;
 
+import static com.xuewen.community.Util.CalculationTimeUtil.calculationTime;
+
 /**
  * @Description TODO
  * @Author 张铠建
@@ -58,16 +60,16 @@ public class QuestionService {
         IPage<Question> iPage = questionMapper.selectPage(ipage,queryWrapper);
         List<Question> questions = iPage.getRecords();
         List<QuestionDTO> questionDTOList = new ArrayList<>();
-        PaginationDTO paginationDTO = new PaginationDTO();
+        PaginationDTO<QuestionDTO> paginationDTO = new PaginationDTO<>();
         for (Question question:questions) {
             User user = userMapper.selectById(question.getCreator());
             QuestionDTO questionDTO = new QuestionDTO();
             BeanUtils.copyProperties(question,questionDTO);
             questionDTO.setUser(user);
-            questionDTO.calculationTime(question.getGmtCreate());
+            questionDTO.setTime(calculationTime(question.getGmtCreate()));
             questionDTOList.add(questionDTO);
         }
-        paginationDTO.setQuestions(questionDTOList);
+        paginationDTO.setData(questionDTOList);
         paginationDTO.setPagination((int)iPage.getTotal(),(int)iPage.getCurrent(),(int)iPage.getSize());
         return paginationDTO;
     }
@@ -92,16 +94,16 @@ public class QuestionService {
         IPage<Question> iPage = questionMapper.selectPage(ipage,queryWrapper);
         List<Question> questions = iPage.getRecords();
         List<QuestionDTO> questionDTOList = new ArrayList<>();
-        PaginationDTO paginationDTO = new PaginationDTO();
+        PaginationDTO<QuestionDTO> paginationDTO = new PaginationDTO<>();
         for (Question question:questions) {
             User user = userMapper.selectById(question.getCreator());
             QuestionDTO questionDTO = new QuestionDTO();
             BeanUtils.copyProperties(question,questionDTO);
             questionDTO.setUser(user);
-            questionDTO.calculationTime(question.getGmtCreate());
+            questionDTO.setTime(calculationTime(question.getGmtCreate()));
             questionDTOList.add(questionDTO);
         }
-        paginationDTO.setQuestions(questionDTOList);
+        paginationDTO.setData(questionDTOList);
         paginationDTO.setPagination((int)iPage.getTotal(),(int)iPage.getCurrent(),(int)iPage.getSize());
         return paginationDTO;
     }
@@ -114,7 +116,7 @@ public class QuestionService {
         User user = userMapper.selectById(question.getCreator());
         QuestionDTO questionDTO = new QuestionDTO();
         BeanUtils.copyProperties(question,questionDTO);
-        questionDTO.calculationTime(question.getGmtCreate());
+        questionDTO.setTime(calculationTime(question.getGmtCreate()));
         questionDTO.setUser(user);
         return questionDTO;
     }
