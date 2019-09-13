@@ -51,8 +51,8 @@ public class PublishController {
             model.addAttribute("error", "标题不能为空");
             return "publish";
         }
-        if (title.length()>25){
-            model.addAttribute("error", "标题不能超过25字");
+        if (title.length()>50){
+            model.addAttribute("error", "标题不能超过50字");
             return "publish";
         }
         if (StringUtils.isBlank(description)){
