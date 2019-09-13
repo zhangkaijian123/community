@@ -90,13 +90,13 @@ public class AuthorizeController {
     }
 
     @GetMapping("/loginout")
-    public String loginOUt(HttpServletRequest request){
+    public String loginOUt(HttpServletRequest request,HttpServletResponse response){
         User user = (User) request.getSession().getAttribute("user");
-        if (user != null){
+        if (user != null) {
             request.getSession().removeAttribute("user");
+            Cookie newCookie = new Cookie("token", null);//cookie名字要相同
+            response.addCookie(newCookie);
         }
         return "redirect:/";
     }
-
-
 }
