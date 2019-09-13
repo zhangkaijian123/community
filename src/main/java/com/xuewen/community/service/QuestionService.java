@@ -64,8 +64,8 @@ public class QuestionService {
         if (page > totalPage){
             ipage.setCurrent(totalPage);
         }
-        List<Question> questions = questionMapper.selectBySearch(ipage.getPages(),size,search);
-        List<QuestionDTO> questionDTOList = new ArrayList<>();
+        List<Question> questions = questionMapper.selectBySearch((page-1)*size,size,search);
+         List<QuestionDTO> questionDTOList = new ArrayList<>();
         PaginationDTO<QuestionDTO> paginationDTO = new PaginationDTO<>();
         for (Question question:questions) {
             User user = userMapper.selectById(question.getCreator());
