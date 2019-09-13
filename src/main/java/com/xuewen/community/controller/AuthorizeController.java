@@ -1,6 +1,7 @@
 package com.xuewen.community.controller;
 
 import com.baomidou.mybatisplus.core.conditions.query.QueryWrapper;
+import com.xuewen.community.Util.AesException;
 import com.xuewen.community.dto.AccessTokenDTO;
 import com.xuewen.community.dto.GithubUser;
 import com.xuewen.community.mapper.UserMapper;
@@ -10,7 +11,6 @@ import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.stereotype.Controller;
-import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 
@@ -18,6 +18,8 @@ import javax.servlet.http.Cookie;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import java.util.UUID;
+import com.xuewen.community.Util.SHA1;
+import org.springframework.web.bind.annotation.ResponseBody;
 
 /**
  * @author 张铠建
@@ -98,5 +100,22 @@ public class AuthorizeController {
             response.addCookie(newCookie);
         }
         return "redirect:/";
+    }
+
+    @GetMapping("/wechat")
+    @ResponseBody
+    public String wehcat(@RequestParam("signature") String signature,@RequestParam("timestamp")String timestamp,@RequestParam("nonce")String nonce,@RequestParam("echostr")String echostr){
+        String token="somelog";//这里填基本配置中的token
+        String jiami="";
+        try {
+            jiami=SHA1.getSHA1(token, timestamp, nonce,"");//这里是对三个参数进行加密
+        } catch (AesException e) {
+            // TODO Auto-generated catch block
+            e.printStackTrace();
+        }
+        if (jiami.equals(signature)){
+            return echostr;
+        }
+        return null;
     }
 }
