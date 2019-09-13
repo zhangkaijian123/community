@@ -15,6 +15,7 @@ import java.io.IOException;
  * @createdate 2019-05-27 13:16
  **/
 @Component
+@Slf4j
 public class GithubProvider {
     public String getAccessToken(AccessTokenDTO accessTokenDTO){
         MediaType mediaType = MediaType.get("application/json;charset=utf-8");
@@ -24,11 +25,15 @@ public class GithubProvider {
         Request request = new Request.Builder().url("https://github.com/login/oauth/access_token")
                 .post(body)
                 .build();
+
         try(Response response = client.newCall(request).execute()){
             try {
+
                 String string = response.body().string();
+                log.info(string);
                 String[] split = string.split("&");
                 String token = split[0].split("=")[1];
+                log.info(token);
                 return token;
             } catch (IOException e) {
                 e.printStackTrace();
@@ -46,7 +51,9 @@ public class GithubProvider {
         try {
             Response response = client.newCall(request).execute();
             String string = response.body().string();
+            log.info(string);
             GithubUser githubUser = JSON.parseObject(string, GithubUser.class);
+            System.out.println(githubUser);
             return githubUser;
         } catch (IOException e) {
             e.printStackTrace();
