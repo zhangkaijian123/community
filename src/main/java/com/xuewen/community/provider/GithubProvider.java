@@ -30,10 +30,10 @@ public class GithubProvider {
             try {
 
                 String string = response.body().string();
-                log.info(string);
+                log.info("response:"+string);
                 String[] split = string.split("&");
                 String token = split[0].split("=")[1];
-                log.info(token);
+                log.info("token:"+token);
                 return token;
             } catch (IOException e) {
                 e.printStackTrace();
@@ -51,9 +51,9 @@ public class GithubProvider {
         try {
             Response response = client.newCall(request).execute();
             String string = response.body().string();
-            log.info(string);
+            log.info("getUser response:"+string);
             GithubUser githubUser = JSON.parseObject(string, GithubUser.class);
-            System.out.println(githubUser);
+            System.out.println("githubUser:"+githubUser);
             return githubUser;
         } catch (IOException e) {
             e.printStackTrace();
