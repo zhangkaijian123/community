@@ -90,12 +90,12 @@ public class AuthorizeController {
     }
 
     @GetMapping("/loginout")
-    public String loginOUt(HttpServletRequest request, Model model){
+    public String loginOUt(HttpServletRequest request){
         User user = (User) request.getSession().getAttribute("user");
         if (user != null){
             request.getSession().removeAttribute("user");
         }
-        return "index";
+        return "redirect:/";
     }
 
 
