@@ -12,7 +12,7 @@
 <script type="application/javascript">
     window.onload = function () {
         let closable = window.localStorage.getItem("closable");
-        if (closable == "true"){
+        if (closable == "true") {
             window.close();
             window.localStorage.removeItem("closable");
         }
@@ -36,7 +36,9 @@
                         <a th:href="@{'/question/'+${question.id}}" th:text="${question.title}"></a>
                     </h4>
                     <span th:text="${#strings.abbreviate(question.description,100)}"></span><br>
-                    <span class="text-desc"><span th:text="${question.commentCount}"></span> 个回复 • <span th:text="${question.viewCount}"></span> 次浏览 • <span th:text="${question.time}"></span></span>
+                    <span class="text-desc"><span th:text="${question.commentCount}"></span> 个回复 • <span
+                            th:text="${question.viewCount}"></span> 次浏览 • <span
+                            th:text="${question.time}"></span></span>
                 </div>
             </div>
             <nav aria-label="Page navigation">
@@ -50,29 +52,34 @@
                         </a>
                     </li>
                     <li th:if="${pagination.showPrevious}">
-                        <a th:href="@{/(page=${pagination.page - 1},search=${search})}" th:if="${search != null}" aria-label="Previous">
+                        <a th:href="@{/(page=${pagination.page - 1},search=${search})}" th:if="${search != null}"
+                           aria-label="Previous">
                             <span aria-hidden="true">&lt;</span>
                         </a>
                         <a th:href="@{/(page=${pagination.page - 1})}" th:if="${search == null}" aria-label="Previous">
                             <span aria-hidden="true">&lt;</span>
                         </a>
                     </li>
-                    <li  th:each="page : ${pagination.pages}" th:class="${pagination.page == page}? 'active' : ''">
-                        <a th:if="${search != null}" th:href="@{/(page=${page},search=${search})}" th:text="${page}"></a>
+                    <li th:each="page : ${pagination.pages}" th:class="${pagination.page == page}? 'active' : ''">
+                        <a th:if="${search != null}" th:href="@{/(page=${page},search=${search})}"
+                           th:text="${page}"></a>
                         <a th:if="${search == null}" th:href="@{/(page=${page})}" th:text="${page}"></a>
                     </li>
-                    <li  th:if="${search != null}">
-                        <a th:if="${pagination.showNext}" th:href="@{/(page=${pagination.page + 1},search=${search})}" aria-label="Previous">
+                    <li th:if="${search != null}">
+                        <a th:if="${pagination.showNext}" th:href="@{/(page=${pagination.page + 1},search=${search})}"
+                           aria-label="Previous">
                             <span aria-hidden="true">&gt;</span>
                         </a>
                     </li>
-                    <li  th:if="${search == null}">
-                        <a th:if="${pagination.showNext}" th:href="@{/(page=${pagination.page + 1})}" aria-label="Previous">
+                    <li th:if="${search == null}">
+                        <a th:if="${pagination.showNext}" th:href="@{/(page=${pagination.page + 1})}"
+                           aria-label="Previous">
                             <span aria-hidden="true">&gt;</span>
                         </a>
                     </li>
-                    <li th:if="${pagination.showEndPage}" >
-                        <a th:if="${search != null}" th:href="@{/(page=${pagination.totalPage},search=${search})}" aria-label="Previous">
+                    <li th:if="${pagination.showEndPage}">
+                        <a th:if="${search != null}" th:href="@{/(page=${pagination.totalPage},search=${search})}"
+                           aria-label="Previous">
                             <span aria-hidden="true">&gt;&gt;</span>
                         </a>
                         <a th:if="${search == null}" th:href="@{/(page=${pagination.totalPage})}" aria-label="Previous">

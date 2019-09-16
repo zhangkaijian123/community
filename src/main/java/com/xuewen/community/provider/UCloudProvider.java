@@ -2,20 +2,16 @@ package com.xuewen.community.provider;
 
 import cn.ucloud.ufile.UfileClient;
 import cn.ucloud.ufile.api.object.ObjectConfig;
-import cn.ucloud.ufile.auth.BucketAuthorization;
 import cn.ucloud.ufile.auth.ObjectAuthorization;
-import cn.ucloud.ufile.auth.UfileBucketLocalAuthorization;
 import cn.ucloud.ufile.auth.UfileObjectLocalAuthorization;
 import cn.ucloud.ufile.bean.PutObjectResultBean;
 import cn.ucloud.ufile.exception.UfileClientException;
 import cn.ucloud.ufile.exception.UfileServerException;
-import cn.ucloud.ufile.http.OnProgressListener;
 import com.xuewen.community.exception.CustomizeErrorCode;
 import com.xuewen.community.exception.CustomizeException;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.stereotype.Service;
 
-import java.io.File;
 import java.io.InputStream;
 import java.util.UUID;
 
